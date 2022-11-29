@@ -14,6 +14,18 @@ def error(x):
                               '\n      Выберите команду из списка.      '
                               '\n                                       '))
     enter_key_to_continue()
+def list_min(list):
+    min = 0
+    for i in range(len(list)):
+        if list[i] < list[min]:
+            min = i
+    return min
+def list_max(list):
+    max = 0
+    for i in range(len(list)):
+        if list[i] > list[max]:
+            max = i
+    return max
 
 # ========================= ДОМАШНЕЕ ЗАДАНИЕ ===========================
 
@@ -55,8 +67,23 @@ def Task02():
                               f'Произведения пар списка: {Result}\n'
                               f'=================================================\n'))
 def Task03():
-    print("\033[36m{}".format('Task 3 text'))
-    print("\033[32m{}".format('=================================================\nresult\n=================================================\n'))
+    print("\033[36m{}".format('Задайте список из вещественных чисел. Напишите программу, которая найдёт\n'
+                              'разницу между максимальным и минимальным значением дробной части элементов.\n'
+                              '*Пример:*\n'
+                              '- [1.1, 1.2, 3.1, 5, 10.01] => 0.19'))
+    num = int(input("\033[0m{}".format('Задайте размер списка ->  ')))
+    List03 = []
+    import random
+    for i in range(num):
+        List03.append(round(random.uniform(1.0, 10.0), 2))
+    tempList = []
+    for j in range(num):
+        tempList.insert(i, round(List03[j]%1, 2))
+    print("\033[32m{}".format(f'=================================================\n'
+                              f'Сгенерирован список: {List03}\n'
+                              f'Разница между минимальным и максимальными дробями равна:\n'
+                              f'{round(tempList[list_max(tempList)] - tempList[list_min(tempList)], 2)}\n'
+                              f'=================================================\n'))
 def Task04():
     print("\033[36m{}".format('Task 4 text'))
     print("\033[32m{}".format('=================================================\nresult\n=================================================\n'))

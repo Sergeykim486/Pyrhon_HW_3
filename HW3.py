@@ -1,19 +1,25 @@
 import os
 Task = 0
-List1 = ['1. Сумма нечетных позиций списка.','2. Произведение пар чисел списка.','3. Разница между min и max дробной частью.','4. Десятичное число в двоичное.','5. Фибоначчи.','6. Выход']
+menu_list = ['1. Сумма нечетных позиций списка.','2. Произведение пар чисел списка.','3. Разница между min и max дробной частью.','4. Десятичное число в двоичное.','5. Фибоначчи.','6. Выход']
 os.system('cls')
 
-def enter_key_to_continue():
-    input("\033[0m{}".format('=================================================\nДля продолжения нажмите клавишу [ENTER]'))
-    main()
-def error(x):
+def error():# процедура вызывается при ошибке
     os.system('cls')
     print("\033[37m\033[41m{}".format('\n                                       '
-                              '\n              ОШИБКА!!!                '
-                              '\n  Вы ввели не существующую команду...  '
-                              '\n      Выберите команду из списка.      '
+                              '\n               ОШИБКА!!!                '
+                              '\n    Ошибка ввода данных или не верный   '
+                              '\n        формат введенных данных.        '
                               '\n                                       '))
     enter_key_to_continue()
+def enter_key_to_continue():# ожидание нажатия ENTER
+    input("\033[0m{}".format('=================================================\nДля продолжения нажмите клавишу [ENTER]'))
+    main()
+# def exit():# Выход из программы
+#     print("\033[0m{}".format('Выход из программы...'))
+#     import sys
+#     sys.exit()
+
+# Функции для заданий
 def list_min(list):
     min = 0
     for i in range(len(list)):
@@ -32,6 +38,12 @@ def fib(x):
     if x in (1, 2):
         return 1
     return fib(x - 1) + fib(x - 2)
+def fibneg(x):
+    if x == -1:
+        return 1
+    elif x == -2:
+        return -1
+    return fibneg(x + 2) - fibneg(x + 1)
 
 # ========================= ДОМАШНЕЕ ЗАДАНИЕ ===========================
 
@@ -107,9 +119,17 @@ def Task05():
                               '*Пример:*\n'
                               '- для k = 8 список будет выглядеть так: [-21 ,13, -8, 5, −3, 2, −1, 1, 0, 1, 1, 2, 3, 5, 8, 13, 21] [Негафибоначчи]'))
     num = int(input("\033[0m{}".format('Введите целое число ->  ')))
-    x = num
-    result = fib(x)
+    result = []
+    for i in range(-num, num+1):
+        if i < 0:
+            result.append(fibneg(i))
+        elif i == 0:
+            result.append(0)
+        elif i > 0:
+            result.append(fib(i))
+    
     print("\033[32m{}".format(f'=================================================\n'
+                              f'фибоначчи ряда чисел от -{num} до {num}:\n'
                               f'{result}\n'
                               f'=================================================\n'))
 
@@ -117,40 +137,54 @@ def Task05():
 
 def choice(x):
     os.system('cls')
-    if x <= len(List1):
-        print("\033[33m{}".format(f'=================================================\n{List1[x-1]}\n================================================='))
+    if x <= len(menu_list):
+        print("\033[33m{}".format(f'=================================================\n{menu_list[x-1]}\n================================================='))
     if x == 1:
-        Task01()
+        try:
+            Task01()
+        except:
+            error()
         enter_key_to_continue()
     elif x == 2:
-        Task02()
+        try:
+            Task02()
+        except:
+            error()
         enter_key_to_continue()
     elif x == 3:
-        Task03()
+        try:
+            Task03()
+        except:
+            error()
         enter_key_to_continue()
     elif x == 4:
-        Task04()
+        try:
+            Task04()
+        except:
+            error()
         enter_key_to_continue()
     elif x == 5:
-        Task05()
+        try:
+            Task05()
+        except:
+            error()
         enter_key_to_continue()
     elif x == 6:
-        os.system('cls')
-        print("\033[0m{}".format('Выход из программы...'))
-        import sys
-        sys.exit()
+        quit()
     else:
-        error(Task)
+        error()
 def main():
     os.system('cls')
     print("\033[32m{}".format('================================================\n============ Г Л А В Н О Е  М Е Н Ю ============\n================================================'))
     print("\033[33m{}".format('Выберите действие...'))
-    print(*List1, sep='\n')
+    print(*menu_list, sep='\n')
     print("\033[32m{}".format('================================================'))
     try:
         Task = int(input("\033[0m{}".format('Введите номер операции ->  ')))
     except:
         Task = 0
-    choice(Task)
+    if 0 < Task <= len(menu_list):
+        choice(Task)
+    else: error()
 
 main()
